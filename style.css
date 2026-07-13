@@ -503,8 +503,8 @@ body {
 
 .otp-inputs {
   display: flex;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: center;
+  gap: 15px;
   margin: 25px 0;
 }
 

