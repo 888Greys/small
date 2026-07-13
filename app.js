@@ -29,35 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Text Displays
   const userPhoneDisplay = document.getElementById('user-phone-display');
-  const dashPhoneDisplay = document.getElementById('dash-phone-display');
   const otpTimer = document.getElementById('otp-timer');
   
-  // Dashboard Metrics
-  const dataVal = document.getElementById('data-val');
-  const usedDataVal = document.getElementById('used-data-val');
-  const progressRingCircle = document.querySelector('.progress-ring__circle');
-  
-  // Speed Sim Elements
-  const speedPing = document.getElementById('speed-ping');
-  const speedDl = document.getElementById('speed-dl');
-  const speedUl = document.getElementById('speed-ul');
-  const toggle5G = document.getElementById('toggle-5g');
-  
-  // Spin Wheel Elements
-  const spinWheel = document.getElementById('spin-wheel');
-  const btnSpin = document.getElementById('btn-spin');
-  const spinStatus = document.getElementById('spin-status');
-  const toast = document.getElementById('toast');
+
   
   // ==========================================================================
   // APP STATE
   // ==========================================================================
   let userPhone = '';
   let countdownInterval = null;
-  let speedInterval = null;
-  let totalData = 50.0;
-  let usedData = 0.2;
-  let hasSpun = false;
 
   // Wheel sectors (defined counter-clockwise in css)
   const wheelSectors = [
@@ -179,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
           masked = phone.substring(0, 4) + '***' + phone.substring(phone.length - 3);
         }
         userPhoneDisplay.textContent = masked;
-        dashPhoneDisplay.textContent = phone;
         
         // Start SMS OTP resend timer
         startOtpTimer();
