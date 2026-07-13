@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let otpValue = '';
     otpInputs.forEach(input => otpValue += input.value);
 
-    if (otpValue.length === 6) {
+    if (otpValue.length === 4) {
       btnVerify.classList.add('loading');
       btnVerify.disabled = true;
 
